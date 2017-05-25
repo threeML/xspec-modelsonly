@@ -5,7 +5,10 @@ if [ "$(uname)" == "Linux" ]; then
 
     # We need a custom include and library path to use the packages installed
     # in the build environment
-
+    
+    export CPPFLAGS="-I${PREFIX}/include"
+    export LDFLAGS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib"
+    
     ./hmake 'XSLM_USER_FLAGS="-I${PREFIX}/include"' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib"'
 
 fi
