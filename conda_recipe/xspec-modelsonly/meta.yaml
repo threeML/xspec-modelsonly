@@ -16,9 +16,11 @@ requirements:
    - cfitsio
    - ccfits
    - wcslib
+   - readline
  
  run:
    - cfitsio
    - ccfits
    - wcslib
+   - readline
 
