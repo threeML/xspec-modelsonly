@@ -5,7 +5,7 @@ package:
 source:
   #path: xspec-modelsonly-v6.20-no-big-data.tar.gz
   #url: https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/release/xspec-modelsonly-v6.21.tar.gz
-  url: file:///home/giacomov/develop/conda_3ML/xspec-dist/tars/xspec-modelsonly-v6.20-no-big-data.tar.gz
+  url: file://xspec-modelsonly-v6.20-no-big-data.tar.gz
 
 build:
   number: 0
@@ -16,15 +16,9 @@ requirements:
    - cfitsio
    - ccfits
    - wcslib
-   - libgfortran
-   - gcc
-   - libgcc
  
  run:
    - cfitsio
    - ccfits
    - wcslib
-   - libgfortran
-   - gcc
-   - libgcc
 

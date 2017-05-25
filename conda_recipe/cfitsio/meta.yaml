@@ -11,11 +11,8 @@ build:
 requirements:
  
  build: 
-   - gcc
-   - libgcc
    
  run:
-   - libgcc
    
 about:
   home: https://heasarc.gsfc.nasa.gov/fitsio/ccfits/
