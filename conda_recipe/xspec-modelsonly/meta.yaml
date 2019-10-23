@@ -1,26 +1,41 @@
 package:
    name: xspec-modelsonly
-   version: "6.20"
+   version: "6.22.1"
 
 source:
-  #path: xspec-modelsonly-v6.20-no-big-data.tar.gz
-  #url: https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/release/xspec-modelsonly-v6.21.tar.gz
-  url: file:///work/xspec-modelsonly-v6.20-no-big-data.tar.gz
+#  md5: 0abea9e1609fcdc2c3e3ada92043d17b
+  url: https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
+  fn: xspec-modelsonly-v6.22.1.tar.gz
 
 build:
   number: 0
 
 requirements:
- 
- build: 
-   - cfitsio
-   - ccfits
-   - wcslib
-   - readline
- 
- run:
-   - cfitsio
-   - ccfits
-   - wcslib
-   - readline
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ compiler('fortran') }}
+    - ncurses==5.*
+    - readline==6.2
+    - cfitsio
+    - ccfits
+    - wcslib
+    - libgfortran
+    #- clang_osx-64 # [osx]
+    #- clangxx_osx-64 # [osx]
+    #- gfortran_osx-64 # [osx]
+  host:
+    - ncurses==5.*
+    - readline==6.2
 
+# Note that ncurses is only needed to build but I am not
+# sure it's needed at all at run-time. To keep things
+# safe and simple I am keeping it, but removing the version
+# number since it was only there to make `configure` happy
+# and there is no evidence ncurses is required in the
+# first place.
+#  run:
+#    - readline
+
+about:
+  home: https://heasarc.gsfc.nasa.gov/xanadu/xspec/
