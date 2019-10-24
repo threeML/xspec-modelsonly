@@ -44,7 +44,7 @@ echo "Python version: ${TRAVIS_PYTHON_VERSION}"
 set -e
 
 # Environment
-# libgfortranver="3.0"
+libgfortranver="3.0"
 
 UPDATE_CONDA=true
 
@@ -82,7 +82,7 @@ conda config --set anaconda_upload no
 # Create test environment
 echo "Create test environment..."
 
-conda create --yes --name $ENVNAME -c conda-forge python=$TRAVIS_PYTHON_VERSION
+conda create --yes --name $ENVNAME -c conda-forge python=$TRAVIS_PYTHON_VERSION libgfortran=${libgfortranver}
 
 # Make sure conda-forge is the first channel
 conda config --add channels conda-forge
