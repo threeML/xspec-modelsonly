@@ -20,6 +20,7 @@ if [ "$(uname)" == "Linux" ]; then
 
     ./hmake 'XSLM_USER_FLAGS="-I${PREFIX}/include"' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
 
+
 fi
 
 if [ "$(uname)" == "Darwin" ]; then
@@ -27,7 +28,8 @@ if [ "$(uname)" == "Darwin" ]; then
     # Build for a fairly old mac to ensure portability
 
     ./configure --prefix=${SRC_DIR}/xspec-modelsonly-build
-    ./hmake 'LDFLAGS_CXX=-lcfitsio -lCCfits -lccfits -lwcs -lgfortran' 'XSLM_USER_FLAGS="-I${PREFIX}/include"' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
+    #./hmake 'LDFLAGS_CXX=-lcfitsio -lCCfits -lccfits -lwcs -lgfortran' 'XSLM_USER_FLAGS="-I${PREFIX}/include"' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
+    ./hmake 'LDFLAGS_CXX=-headerpad_max_install_names -lcfitsio -lCCfits -lccfits -lwcs -lgfortran' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
 
     #make HD_ADD_SHLIB_LIBS=yes
     #make install

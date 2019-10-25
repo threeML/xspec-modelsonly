@@ -11,22 +11,32 @@ build:
   number: 0
 
 requirements:
-  build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - {{ compiler('fortran') }}
-    - ncurses<6.0
-    - readline==6.2
-    - cfitsio<3.450
-    - ccfits
-    - wcslib
-    #- libgfortran==3.0
-    #- clang_osx-64 # [osx]
-    #- clangxx_osx-64 # [osx]
-    #- gfortran_osx-64 # [osx]
-  host:
-    - ncurses
-    - readline
+    build:
+        - ccfits 2.5 0
+        - cfitsio 3.410 2
+        - gfortran_osx-64 4.8.5 h22b1bf0_3
+        - libgfortran 3.0.1 h93005f0_2
+        - libpng 1.6.34 0
+        - libxcb 1.12 1
+        - ncurses 5.9 10
+        - perl 5.20.3.1 2
+        - pgplot 5.2.2 2
+        - readline 6.2 0
+        - toolchain 2.1.2 0
+        - wcslib 5.18 2
+        - xorg-kbproto 1.0.7 1
+        - xorg-libx11 1.6.4 6
+        - xorg-libxau 1.0.8 3
+        - xorg-libxdmcp 1.1.2 3
+        - xorg-xproto 7.0.31 6
+        - zlib 1.2.11 0
+    run:
+        - cfitsio
+        - ccfits
+        - wcslib
+        - readline 6.2
+        - libgfortran
+        - ncurses
 
 # Note that ncurses is only needed to build but I am not
 # sure it's needed at all at run-time. To keep things

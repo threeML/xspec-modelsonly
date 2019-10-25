@@ -46,7 +46,7 @@ set -e
 # Environment
 libgfortranver="3.0"
 
-UPDATE_CONDA=true
+UPDATE_CONDA=false
 
 #if [[ ${TRAVIS_OS_NAME} == linux ]];
 #then
@@ -61,6 +61,10 @@ UPDATE_CONDA=true
 #fi
 
 
+#conda config --remove channels conda-forge
+#conda config --remove channels default
+
+conda_channel=conda-forge/label/cf201901
 
 if $UPDATE_CONDA ; then
     # Update conda
@@ -70,7 +74,7 @@ fi
 
 if [[ ${TRAVIS_OS_NAME} == osx ]];
 then
-    conda config --add channels conda-forge
+    conda config --add channels $conda_channel
 fi
 
 # Answer yes to all questions (non-interactive)
@@ -82,12 +86,13 @@ conda config --set anaconda_upload no
 # Create test environment
 echo "Create test environment..."
 
-conda create --yes --name $ENVNAME -c conda-forge python=$TRAVIS_PYTHON_VERSION libgfortran=${libgfortranver}
+conda create --yes --name $ENVNAME -c $conda_channel python=$TRAVIS_PYTHON_VERSION
+#libgfortran=${libgfortranver}
 
 # Make sure conda-forge is the first channel
-conda config --add channels conda-forge
+conda config --add channels $conda_channel
 
-conda config --add channels defaults
+#conda config --add channels defaults
 
 # Activate test environment
 echo "Activate test environment..."
@@ -108,7 +113,7 @@ else
     conda index $HOME/miniconda/conda-bld
 fi
 echo "======> installing..."
-conda install --use-local -c conda-forge xspec-modelsonly
+conda install --use-local -c $conda_channel xspec-modelsonly
 
 # Run tests
 #cd astromodels/tests
