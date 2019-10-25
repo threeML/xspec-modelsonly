@@ -53,7 +53,8 @@ conda config --add channels $conda_channel
 echo "=====================> Activate test environment..."
 
 #source $CONDA_PREFIX/etc/profile.d/conda.sh
-conda activate $ENVNAME
+
+source activate $ENVNAME
 
 # Build package
 echo "Build package..."
