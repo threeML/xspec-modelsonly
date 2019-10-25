@@ -3,57 +3,23 @@
 set -e
 
 # FLAGS AND ENVIRONMENT:
-
-TRAVIS_OS_NAME="unknown"
-UPDATE_CONDA=false
-TRAVIS_PYTHON_VERSION=2.7
-TRAVIS_BUILD_NUMBER=1
-
 LIBGFORTRAN_VERSION="3.0"
 READLINE_VERSION="6.2"
+UPDATE_CONDA=false
 
 ENVNAME=xsmodelsonly_test_$TRAVIS_PYTHON_VERSION
 
-
 conda_channel=conda-forge/label/cf201901
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-
-        # Linux
-
-        TRAVIS_OS_NAME="linux"
-
-
-elif [[ "$OSTYPE" == darwin* ]]; then
-
-        # Mac OSX
-
-        TRAVIS_OS_NAME="osx"
-
-
-elif [[ "$OSTYPE" == "cygwin" ]]; then
-
-        # POSIX compatibility layer and Linux environment emulation for Windows
-
-        TRAVIS_OS_NAME="linux"
-
-else
-
-        # Unknown.
-
-        echo "Could not guess your OS. Exiting."
-
-        exit 1
-
+if [[ ${TRAVIS_OS_NAME} == linux ]];
+then
+    miniconda_os=Linux
+else  # osx
+    miniconda_os=MacOSX
 fi
 
 echo "Running on ${TRAVIS_OS_NAME}"
 echo "Python version: ${TRAVIS_PYTHON_VERSION}"
-
-
-#conda config --remove channels conda-forge
-#conda config --remove channels default
-
 
 if $UPDATE_CONDA ; then
     # Updating conda
@@ -88,7 +54,6 @@ echo "=====================> Activate test environment..."
 
 source $CONDA_PREFIX/etc/profile.d/conda.sh
 conda activate $ENVNAME
-#source activate $ENVNAME
 
 # Build package
 echo "Build package..."
@@ -103,16 +68,22 @@ fi
 echo "======> installing..."
 conda install --use-local -c $conda_channel xspec-modelsonly
 
-# Run tests
-#cd astromodels/tests
-#python -m pytest -vv --cov=astromodels # -k "not slow"
 
-# Codecov needs to run in the main git repo
-
-## Upload coverage measurements if we are on Linux
-#if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-
-#    echo "********************************** COVERAGE ******************************"
-#    codecov -t 493c9a2d-42fc-40d6-8e65-24e681efaa1e#
-
-#fi
+# UPLOAD TO CONDA:
+# If we are on the master branch upload to the channel
+if [[ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]]; then
+    echo "This is a pull request, not uploading to Conda channel"
+else
+    if [[ "${TRAVIS_EVENT_TYPE}" == "push" ]]; then
+        echo "This is a push to TRAVIS_BRANCH=${TRAVIS_BRANCH}"
+        if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
+            conda install -c conda-forge anaconda-client
+            echo "Uploading ${CONDA_BUILD_PATH}"
+            if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+                anaconda -t $CONDA_UPLOAD_TOKEN upload -u threeml /home/travis/miniconda/conda-bld/linux-64/*.tar.bz2 --force
+            else
+                anaconda -t $CONDA_UPLOAD_TOKEN upload -u threeml /Users/travis/miniconda/conda-bld/*/*.tar.bz2 --force
+            fi
+        fi
+    fi
+fi

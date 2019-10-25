@@ -3,38 +3,19 @@ cd BUILD_DIR
 # We need a custom include and library path to use the packages installed
 # in the build environment
 
-echo SRC_DIR="${SRC_DIR}"
-echo BUILD_PREFIX=$"{BUILD_PREFIX}"
-
 export CFLAGS="-I$CONDA_PREFIX/include"
 export CXXFLAGS="-std=c++11 -Wno-c++11-narrowing -I$CONDA_PREFIX/include"
 export LDFLAGS="$LDFLAGS -L$CONDA_PREFIX/lib -L${PREFIX}/lib"
 
-#export CFLAGS="${CFLAGS} -I${PREFIX}/include -O2 -Wall --pedantic -Wno-comment -Wno-long-long -g  -ffloat-store -fPIC"
-#export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -O2 -std=c++11 -Wno-c++11-narrowing -Wall --pedantic -Wno-comment -Wno-long-long -g -ffloat-store -fPIC"
-#export CPPFLAGS="${CXXFLAGS} -I${PREFIX}/include"
-
 if [ "$(uname)" == "Linux" ]; then
-
     ./configure --prefix=${SRC_DIR}/xspec-modelsonly-build
-
     ./hmake 'XSLM_USER_FLAGS="-I${PREFIX}/include"' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
-
-
 fi
 
 if [ "$(uname)" == "Darwin" ]; then
-
     # Build for a fairly old mac to ensure portability
-
     ./configure --prefix=${SRC_DIR}/xspec-modelsonly-build
-    #./hmake 'LDFLAGS_CXX=-lcfitsio -lCCfits -lccfits -lwcs -lgfortran' 'XSLM_USER_FLAGS="-I${PREFIX}/include"' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
     ./hmake 'LDFLAGS_CXX=-headerpad_max_install_names -lcfitsio -lCCfits -lccfits -lwcs -lgfortran' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
-
-    #make HD_ADD_SHLIB_LIBS=yes
-    #make install
-    #./hmake 'LDFLAGS_CXX=-headerpad_max_install_names -lcfitsio -lCCfits -lccfits -lwcs -lgfortran' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
-
 fi
 
 make install
