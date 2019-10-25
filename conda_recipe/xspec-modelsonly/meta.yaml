@@ -12,21 +12,21 @@ build:
 
 requirements:
   build:
-    #- {{ compiler('c') }}
-    #- {{ compiler('cxx') }}
-    #- {{ compiler('fortran') }}
-    - ncurses>=5
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ compiler('fortran') }}
+    - ncurses<6.0
     - readline==6.2
-    - cfitsio
+    - cfitsio<3.450
     - ccfits
     - wcslib
     #- libgfortran==3.0
-    - clang_osx-64 # [osx]
-    - clangxx_osx-64 # [osx]
-    - gfortran_osx-64 # [osx]
+    #- clang_osx-64 # [osx]
+    #- clangxx_osx-64 # [osx]
+    #- gfortran_osx-64 # [osx]
   host:
-    - ncurses>=5
-    - readline==6.2
+    - ncurses
+    - readline
 
 # Note that ncurses is only needed to build but I am not
 # sure it's needed at all at run-time. To keep things

@@ -92,9 +92,9 @@ conda config --add channels defaults
 # Activate test environment
 echo "Activate test environment..."
 
-#source $HOME/work/fermi/miniconda3/etc/profile.d/conda.sh
-#conda activate $ENVNAME
-source activate $ENVNAME
+source $CONDA_PREFIX/etc/profile.d/conda.sh
+conda activate $ENVNAME
+#source activate $ENVNAME
 
 # Build package
 echo "Build package..."
