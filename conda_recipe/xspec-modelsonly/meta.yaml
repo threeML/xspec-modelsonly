@@ -8,35 +8,35 @@ source:
   fn: xspec-modelsonly-v6.22.1.tar.gz
 
 build:
-  number: 0
+  number: 1
 
 requirements:
     build:
-        - ccfits 2.5
-        - cfitsio 3.410
-        - gfortran_osx-64 # [osx]
-        - libgfortran 3.0
-        #- libpng 1.6.34
-        #- libxcb 1.12
-        - ncurses 5.9
-        #- perl 5.20.3.1
-        #- pgplot 5.2.2
-        - readline 6.2
-        - toolchain 2.1.2
-        - wcslib 5.18
-        #- xorg-kbproto 1.0.7 1
-        #- xorg-libx11 1.6.4 6
-        #- xorg-libxau 1.0.8 3
-        #- xorg-libxdmcp 1.1.2 3
-        #- xorg-xproto 7.0.31 6
-        #- zlib 1.2.11
+      - ccfits==2.5
+      - cfitsio==3.410
+      - gfortran_osx-64 # [osx]
+      - libgfortran>=3.0
+      #- libpng 1.6.34
+      #- libxcb 1.12
+      - ncurses==5.9
+      #- perl 5.20.3.1
+      #- pgplot 5.2.2
+      - readline==6.2
+      - toolchain==2.1.2
+      - wcslib==5.18
+      #- xorg-kbproto 1.0.7 1
+      #- xorg-libx11 1.6.4 6
+      #- xorg-libxau 1.0.8 3
+      #- xorg-libxdmcp 1.1.2 3
+      #- xorg-xproto 7.0.31 6
+      #- zlib 1.2.11
     run:
-        - cfitsio
-        - ccfits
-        - wcslib
-        #- readline 6.2
-        - libgfortran
-        - ncurses
+      - ccfits==2.5
+      - cfitsio==3.410
+      - wcslib==5.18
+      - libgfortran
+      - ncurses==5.9
+      - readline==6.2
 
 # Note that ncurses is only needed to build but I am not
 # sure it's needed at all at run-time. To keep things
