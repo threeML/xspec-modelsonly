@@ -5,7 +5,7 @@ set -e
 # FLAGS AND ENVIRONMENT:
 
 TRAVIS_OS_NAME="unknown"
-UPDATE_CONDA=false
+UPDATE_CONDA=true
 TRAVIS_PYTHON_VERSION=2.7
 TRAVIS_BUILD_NUMBER=1
 
@@ -93,6 +93,7 @@ echo "======> getting the file..."
 if ! [ -f xspec-modelsonly-v6.22.1.tar.gz ]; then
     curl -LO -z xspec-modelsonly-v6.22.1.tar.gz https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
 fi
+#conda install conda-verify
 
 # Build package
 echo "Build package..."

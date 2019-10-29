@@ -63,6 +63,9 @@ fi
 
 # Build package
 echo "Build package..."
+
+#conda install conda-verify
+
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     conda build --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
     #conda index $HOME/miniconda/conda-bld
