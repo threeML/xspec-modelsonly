@@ -1,4 +1,7 @@
-cd BUILD_DIR
+echo "================="
+echo $PWD
+tar xf xspec-modelsonly-v6.22.1.tar.gz
+cd xspec-modelsonly-v6.22.1/BUILD_DIR
 
 # We need a custom include and library path to use the packages installed
 # in the build environment

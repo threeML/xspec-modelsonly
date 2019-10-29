@@ -3,9 +3,10 @@ package:
    version: "6.22.1"
 
 source:
-#  md5: 0abea9e1609fcdc2c3e3ada92043d17b
-  url: https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
-  fn: xspec-modelsonly-v6.22.1.tar.gz
+  #  md5: 0abea9e1609fcdc2c3e3ada92043d17b
+  # url: https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
+  path: ../../xspec-modelsonly-v6.22.1.tar.gz
+  #fn: xspec-modelsonly-v6.22.1.tar.gz
 
 build:
   number: 1
@@ -15,6 +16,7 @@ requirements:
       - ccfits==2.5
       - cfitsio==3.410
       - gfortran_osx-64 # [osx]
+      - gcc # [linux]
       - libgfortran>=3.0
       #- libpng 1.6.34
       #- libxcb 1.12
