@@ -16,7 +16,9 @@ requirements:
       - ccfits==2.5
       - cfitsio==3.410
       - gfortran_osx-64 # [osx]
-      - gcc # [linux]
+      - {{ compiler('c') }} # [linux]
+      - {{ compiler('cxx') }} # [linux]
+      - {{ compiler('fortran') }} # [linux]
       - libgfortran>=3.0
       #- libpng 1.6.34
       #- libxcb 1.12
