@@ -1,26 +1,24 @@
-cd BUILD_DIR
+echo "================="
+echo $PWD
+tar xf xspec-modelsonly-v6.22.1.tar.gz
+cd xspec-modelsonly-v6.22.1/BUILD_DIR
+
+# We need a custom include and library path to use the packages installed
+# in the build environment
+
+export CFLAGS="-I$CONDA_PREFIX/include"
+export CXXFLAGS="-std=c++11 -Wno-c++11-narrowing -I$CONDA_PREFIX/include"
+export LDFLAGS="$LDFLAGS -L$CONDA_PREFIX/lib -L${PREFIX}/lib"
 
 if [ "$(uname)" == "Linux" ]; then
-
-    # We need a custom include and library path to use the packages installed
-    # in the build environment
-    export CFLAGS='-I${PREFIX}/include -O2 -Wall --pedantic -Wno-comment -Wno-long-long -g  -ffloat-store -fPIC'
-    export CXXFLAGS='-I${PREFIX}/include -O2 -Wall --pedantic -Wno-comment -Wno-long-long -g  -ffloat-store -fPIC'
-    export CPPFLAGS="-I${PREFIX}/include"
-    export LDFLAGS="-L${PREFIX}/lib"
-    
     ./configure --prefix=${SRC_DIR}/xspec-modelsonly-build
-    
-    ./hmake 'XSLM_USER_FLAGS="-I${PREFIX}/include"' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib"'
-
+    ./hmake 'XSLM_USER_FLAGS="-I${PREFIX}/include"' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
 fi
 
 if [ "$(uname)" == "Darwin" ]; then
-
+    # Build for a fairly old mac to ensure portability
     ./configure --prefix=${SRC_DIR}/xspec-modelsonly-build
-
-    ./hmake 'LDFLAGS_CXX=-headerpad_max_install_names -lcfitsio -lCCfits -lccfits -lwcs'
-
+    ./hmake 'LDFLAGS_CXX=-headerpad_max_install_names -lcfitsio -lCCfits -lccfits -lwcs -lgfortran' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
 fi
 
 make install
