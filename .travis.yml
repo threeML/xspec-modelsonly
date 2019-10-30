@@ -1,34 +1,30 @@
 sudo: required
-
 language: generic
-
 matrix:
-
   include:
-    - os: linux
-      python: 2.7
-      env: TRAVIS_PYTHON_VERSION=2.7
-
-    - os: osx
-      python: 2.7
-      env: TRAVIS_PYTHON_VERSION=2.7
-
+  - os: linux
+    python: 2.7
+    env: TRAVIS_PYTHON_VERSION=2.7
+  - os: osx
+    python: 2.7
+    env: TRAVIS_PYTHON_VERSION=2.7
 before_install:
-  - |
-       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-         wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-         bash miniconda.sh -b -p $HOME/miniconda
-         export PATH="$HOME/miniconda/bin:$PATH"
-         conda install -y conda-build
-       else
-         # Install Miniconda
-         wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh
-         bash miniconda.sh -b -p $HOME/miniconda
-         export PATH="$HOME/miniconda/bin:$PATH"
-         conda install -y conda-build
-       fi
-
+- |
+  if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+    bash miniconda.sh -b -p $HOME/miniconda
+    export PATH="$HOME/miniconda/bin:$PATH"
+    conda install -y conda-build
+  else
+    # Install Miniconda
+    wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh
+    bash miniconda.sh -b -p $HOME/miniconda
+    export PATH="$HOME/miniconda/bin:$PATH"
+    conda install -y conda-build
+  fi
 script:
-  - chmod u+x ci/build_and_test.sh
-  - travis_wait 120 ./ci/build_and_test.sh
-
+- chmod u+x ci/build_and_test.sh
+- travis_wait 120 ./ci/build_and_test.sh
+env:
+  global:
+    secure: XbdGWPm1owxwQdXRMdnljFUXArWtcXpZY4o6x+bM2/Yu6cFHReBBdPGIOEfajLUccY1DW4x9KqxKBlUJVupylWk87LabnepPKRhileYelLbINy+IEARwg5Ncea4QePSOgO6j14FnBFlKRJ8niMgR7lGGN4bRYlTmqrGlsSGUqhGuQ+dj9SSt29OVmEw5eJ6MA6Te9RPctHM2a59IVv+rHk6RCqv+H6A26YAnuxtb4wVSKd8eMeQLxOO39SU7H7WZB48f4yVQ2+XmJ4je4J+dpoyIZyogTpTXotUF5dK3wqadHkVwxXj9n3UjBOw2Wkj0V6K0Uhxdlzf+LYfxgktlsxLNweUsCD5fy/72hLcVmRzlvgme3vMOFT/6BJ6AcFeNNx9deYLm5CPoqxvBgaOkBFvl++ct6mcPgYN+94sVyFhnf8ve+VnY/MCpqqZiqOsJHBZrYPRZvusK3b97IC3uUWR3ZCXxq1TaJ4/+Thp2XNZxW1sQx0T8Cx5qCqiGWMVz1IZIfgfoP2FGTqLiw+9MH1m6LA9A4c62+cWvrlpgh/oNddZCE9PWyLQq/8wXwnVGun2j2ClTQoLSNKLZHgq0pWkKjNojzbPCcXGeKWpK0GHOGB0pk0bkYLAIu+zQdwzJUK4LLcfVPjUBX5glJ+nBIXuSQZfrDuib4n1g/yiU2Vs=
