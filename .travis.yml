@@ -24,4 +24,4 @@ before_install:
   fi
 script:
 - chmod u+x ci/build_and_test.sh
-- travis_wait 120 ./ci/build_and_test.sh
+- ./ci/build_and_test.sh
