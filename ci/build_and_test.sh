@@ -59,7 +59,7 @@ source activate $ENVNAME
 echo "======> getting the file..."
 if ! [ -f xspec-modelsonly-v6.22.1.tar.gz ]; then
     #curl -LO -z xspec-modelsonly-v6.22.1.tar.gz https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
-    curl -LO -z xspec-modelsonly-v6.22.1.tar.gz https://www.dropbox.com/s/tthemkgy27lx71c/xspec-modelsonly-v6.22.1.tar.gz?dl=0
+    curl -LO -z xspec-modelsonly-v6.22.1.tar.gz https://www.dropbox.com/s/tthemkgy27lx71c/xspec-modelsonly-v6.22.1.tar.gz
 fi
 
 # Build package
