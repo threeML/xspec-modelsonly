@@ -19,7 +19,7 @@ requirements:
       - {{ compiler('c') }} # [linux]
       - {{ compiler('cxx') }} # [linux]
       - {{ compiler('fortran') }} # [linux]
-      - libgfortran>=3.0
+      - libgfortran>=3.0,<4.0
       - ncurses==5.9
       - readline==6.2
       - toolchain==2.1.2

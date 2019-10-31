@@ -11,13 +11,6 @@ ENVNAME=xsmodelsonly_test_$TRAVIS_PYTHON_VERSION
 
 conda_channel=conda-forge/label/cf201901
 
-if [[ ${TRAVIS_OS_NAME} == linux ]];
-then
-    miniconda_os=Linux
-else  # osx
-    miniconda_os=MacOSX
-fi
-
 echo "Running on ${TRAVIS_OS_NAME}"
 echo "Python version: ${TRAVIS_PYTHON_VERSION}"
 
@@ -53,7 +46,6 @@ conda config --add channels $conda_channel
 echo "=====================> Activate test environment..."
 
 #source $CONDA_PREFIX/etc/profile.d/conda.sh
-
 source activate $ENVNAME
 
 echo "======> getting the file..."
@@ -89,9 +81,9 @@ else
             conda install -c conda-forge anaconda-client
             echo "Uploading ${CONDA_BUILD_PATH}"
             if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-                anaconda -t $CONDA_UPLOAD_TOKEN upload -u omodei /home/travis/miniconda/conda-bld/linux-64/*.tar.bz2 --force
+                anaconda -t $CONDA_UPLOAD_TOKEN upload -u threeml /home/travis/miniconda/conda-bld/linux-64/*.tar.bz2 --force
             else
-                anaconda -t $CONDA_UPLOAD_TOKEN upload -u omodei /Users/travis/miniconda/conda-bld/*/*.tar.bz2 --force
+                anaconda -t $CONDA_UPLOAD_TOKEN upload -u threeml /Users/travis/miniconda/conda-bld/*/*.tar.bz2 --force
             fi
         fi
     fi

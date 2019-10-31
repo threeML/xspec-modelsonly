@@ -1,22 +1,13 @@
 #!/usr/bin/env bash
 # Make sure we fail in case of errors
 set -e
-
-# FLAGS AND ENVIRONMENT:
-
+# FROM TRAVIS:
 TRAVIS_OS_NAME="unknown"
-UPDATE_CONDA=true
 TRAVIS_PYTHON_VERSION=2.7
 TRAVIS_BUILD_NUMBER=1
-
-LIBGFORTRAN_VERSION="3.0"
-READLINE_VERSION="6.2"
-
-ENVNAME=xsmodelsonly_test_$TRAVIS_PYTHON_VERSION
-
-
-conda_channel=conda-forge/label/cf201901
-
+TRAVIS_EVENT_TYPE="push"
+#TRAVIS_BRANCH="master"
+TRAVIS_BRANCH="no_master"
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 
         # Linux
@@ -47,13 +38,20 @@ else
 
 fi
 
+
+
+# Build and test...
+# FLAGS AND ENVIRONMENT:
+LIBGFORTRAN_VERSION="3.0"
+READLINE_VERSION="6.2"
+UPDATE_CONDA=false
+
+ENVNAME=xsmodelsonly_test_$TRAVIS_PYTHON_VERSION
+
+conda_channel=conda-forge/label/cf201901
+
 echo "Running on ${TRAVIS_OS_NAME}"
 echo "Python version: ${TRAVIS_PYTHON_VERSION}"
-
-
-#conda config --remove channels conda-forge
-#conda config --remove channels default
-
 
 if $UPDATE_CONDA ; then
     # Updating conda
@@ -89,14 +87,17 @@ echo "=====================> Activate test environment..."
 source $CONDA_PREFIX/etc/profile.d/conda.sh
 conda activate $ENVNAME
 #source activate $ENVNAME
+
 echo "======> getting the file..."
 if ! [ -f xspec-modelsonly-v6.22.1.tar.gz ]; then
     curl -LO -z xspec-modelsonly-v6.22.1.tar.gz https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
 fi
-#conda install conda-verify
 
 # Build package
 echo "Build package..."
+
+#conda install conda-verify
+
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     conda build --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
     #conda index $HOME/miniconda/conda-bld
@@ -108,16 +109,21 @@ fi
 echo "======> installing..."
 conda install --use-local -c $conda_channel xspec-modelsonly
 
-# Run tests
-#cd astromodels/tests
-#python -m pytest -vv --cov=astromodels # -k "not slow"
-
-# Codecov needs to run in the main git repo
-
-## Upload coverage measurements if we are on Linux
-#if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-
-#    echo "********************************** COVERAGE ******************************"
-#    codecov -t 493c9a2d-42fc-40d6-8e65-24e681efaa1e#
-
-#fi
+# UPLOAD TO CONDA:
+# If we are on the master branch upload to the channel
+if [[ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]]; then
+    echo "This is a pull request, not uploading to Conda channel"
+else
+    if [[ "${TRAVIS_EVENT_TYPE}" == "push" ]]; then
+        echo "This is a push to TRAVIS_BRANCH=${TRAVIS_BRANCH}"
+        if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
+            conda install -c conda-forge anaconda-client
+            echo "Uploading ${CONDA_BUILD_PATH}"
+            if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+                anaconda -t $CONDA_UPLOAD_TOKEN upload -u omodei $HOME/miniconda/conda-bld/linux-64/*.tar.bz2 --force
+            else
+                anaconda -t $CONDA_UPLOAD_TOKEN upload -u omodei $HOME/miniconda/conda-bld/*/*.tar.bz2 --force
+            fi
+        fi
+    fi
+fi
