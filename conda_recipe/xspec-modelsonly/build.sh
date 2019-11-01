@@ -7,18 +7,18 @@ cd xspec-modelsonly-v6.22.1/BUILD_DIR
 # in the build environment
 
 export CFLAGS="-I$CONDA_PREFIX/include"
-export CXXFLAGS="-std=c++11 -Wno-c++11-narrowing -I$CONDA_PREFIX/include"
+export CXXFLAGS="-std=c++11 -Wno-c++11-narrowing -Wall -Wno-deprecated -I$CONDA_PREFIX/include"
 export LDFLAGS="$LDFLAGS -L$CONDA_PREFIX/lib -L${PREFIX}/lib"
 
 if [ "$(uname)" == "Linux" ]; then
     ./configure --prefix=${SRC_DIR}/xspec-modelsonly-build
-    ./hmake 'XSLM_USER_FLAGS="-I${PREFIX}/include"' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
+    ./hmake '--quiet' 'XSLM_USER_FLAGS="-I${PREFIX}/include"' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
 fi
 
 if [ "$(uname)" == "Darwin" ]; then
     # Build for a fairly old mac to ensure portability
     ./configure --prefix=${SRC_DIR}/xspec-modelsonly-build
-    ./hmake 'LDFLAGS_CXX=-headerpad_max_install_names -lcfitsio -lCCfits -lccfits -lwcs -lgfortran' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
+    ./hmake '--quiet' 'LDFLAGS_CXX=-headerpad_max_install_names -lcfitsio -lCCfits -lccfits -lwcs -lgfortran' 'XSLM_USER_LIBS="-L${PREFIX}/lib -lCCfits -lcfitsio -lwcslib -lgfortran"'
 fi
 
 make install

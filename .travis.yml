@@ -24,4 +24,8 @@ before_install:
   fi
 script:
 - chmod u+x ci/build_and_test.sh
-- travis_wait 120 ./ci/build_and_test.sh
+- |
+  while sleep 9m; do
+     echo "====[ $SECONDS seconds still running ]===="
+  done &
+- ./ci/build_and_test.sh
