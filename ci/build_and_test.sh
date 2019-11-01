@@ -79,12 +79,13 @@ else
         echo "This is a push to TRAVIS_BRANCH=${TRAVIS_BRANCH}"
         if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
             conda install -c conda-forge anaconda-client
-            echo "Uploading ${CONDA_BUILD_PATH}"
+            echo "Uploading..."
             if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-                anaconda -t $CONDA_UPLOAD_TOKEN upload -u threeml /home/travis/miniconda/conda-bld/linux-64/*.tar.bz2 --force
+                anaconda -t $CONDA_UPLOAD_TOKEN upload -u threeml /home/travis/miniconda/conda-bld/linux-64/*.tar.bz2 --force >upload.log
             else
-                anaconda -t $CONDA_UPLOAD_TOKEN upload -u threeml /Users/travis/miniconda/conda-bld/*/*.tar.bz2 --force
+                anaconda -t $CONDA_UPLOAD_TOKEN upload -u threeml /Users/travis/miniconda/conda-bld/*/*.tar.bz2 --force >upload.log
             fi
         fi
     fi
 fi
+echo "Done."

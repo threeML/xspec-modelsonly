@@ -25,7 +25,7 @@ before_install:
 script:
 - chmod u+x ci/build_and_test.sh
 - |
-  while sleep 9m; do
+  while sleep 500; do
      echo "====[ $SECONDS seconds still running ]===="
   done &
 - ./ci/build_and_test.sh
