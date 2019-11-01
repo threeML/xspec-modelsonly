@@ -81,9 +81,9 @@ else
             conda install -c conda-forge anaconda-client
             echo "Uploading..."
             if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-                anaconda -t $CONDA_UPLOAD_TOKEN upload -u threeml /home/travis/miniconda/conda-bld/linux-64/*.tar.bz2 --force >upload.log
+                anaconda -q -t $CONDA_UPLOAD_TOKEN upload -u threeml /home/travis/miniconda/conda-bld/linux-64/*.tar.bz2 --force
             else
-                anaconda -t $CONDA_UPLOAD_TOKEN upload -u threeml /Users/travis/miniconda/conda-bld/*/*.tar.bz2 --force >upload.log
+                anaconda -q -t $CONDA_UPLOAD_TOKEN upload -u threeml /Users/travis/miniconda/conda-bld/*/*.tar.bz2 --force
             fi
         fi
     fi
