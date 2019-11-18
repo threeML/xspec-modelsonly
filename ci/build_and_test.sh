@@ -70,9 +70,6 @@ fi
 echo "======> installing..."
 conda install --use-local -c $conda_channel xspec-modelsonly
 
-# TEMP
-conda search xspec-modelsonly --use-local --info
-
 # UPLOAD TO CONDA:
 # If we are on the master branch upload to the channel
 if [[ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]]; then

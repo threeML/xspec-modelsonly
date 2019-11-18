@@ -3,7 +3,7 @@
 set -e
 # FROM TRAVIS:
 TRAVIS_OS_NAME="unknown"
-TRAVIS_PYTHON_VERSION=2.7
+TRAVIS_PYTHON_VERSION=3.7
 TRAVIS_BUILD_NUMBER=1
 TRAVIS_EVENT_TYPE="push"
 #TRAVIS_BRANCH="master"
@@ -59,9 +59,9 @@ if $UPDATE_CONDA ; then
     conda update --yes -q conda conda-build
 fi
 
-if [[ ${TRAVIS_OS_NAME} == osx ]];
+if [[ ${TRAVIS_PYTHON_VERSION} == 2.7 ]];
 then
-    conda config --add channels $conda_channel
+    READLINE="readline=${READLINE_VERSION}"
 fi
 
 # Answer yes to all questions (non-interactive)
@@ -73,7 +73,7 @@ conda config --set anaconda_upload no
 # Create test environment
 echo " ======================>  Creating the test environment..."
 
-conda create --yes --name $ENVNAME -c $conda_channel python=$TRAVIS_PYTHON_VERSION readline=${READLINE_VERSION}
+conda create --yes --name $ENVNAME -c $conda_channel python=$TRAVIS_PYTHON_VERSION ${READLINE}
 #libgfortran=${LIBGFORTRAN_VERSION}
 
 # Make sure conda-forge is the first channel
@@ -85,8 +85,8 @@ conda config --add channels $conda_channel
 echo "=====================> Activate test environment..."
 
 source $CONDA_PREFIX/etc/profile.d/conda.sh
+#source /home/ndilalla/work/fermi/miniconda3/etc/profile.d/conda.sh
 conda activate $ENVNAME
-#source activate $ENVNAME
 
 echo "======> getting the file..."
 if ! [ -f xspec-modelsonly-v6.22.1.tar.gz ]; then
@@ -111,19 +111,19 @@ conda install --use-local -c $conda_channel xspec-modelsonly
 
 # UPLOAD TO CONDA:
 # If we are on the master branch upload to the channel
-if [[ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]]; then
-    echo "This is a pull request, not uploading to Conda channel"
-else
-    if [[ "${TRAVIS_EVENT_TYPE}" == "push" ]]; then
-        echo "This is a push to TRAVIS_BRANCH=${TRAVIS_BRANCH}"
-        if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
-            conda install -c conda-forge anaconda-client
-            echo "Uploading ${CONDA_BUILD_PATH}"
-            if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-                anaconda -t $CONDA_UPLOAD_TOKEN upload -u omodei $HOME/miniconda/conda-bld/linux-64/*.tar.bz2 --force
-            else
-                anaconda -t $CONDA_UPLOAD_TOKEN upload -u omodei $HOME/miniconda/conda-bld/*/*.tar.bz2 --force
-            fi
-        fi
-    fi
-fi
+# if [[ "${TRAVIS_EVENT_TYPE}" == "pull_request" ]]; then
+#     echo "This is a pull request, not uploading to Conda channel"
+# else
+#     if [[ "${TRAVIS_EVENT_TYPE}" == "push" ]]; then
+#         echo "This is a push to TRAVIS_BRANCH=${TRAVIS_BRANCH}"
+#         if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
+#             conda install -c conda-forge anaconda-client
+#             echo "Uploading ${CONDA_BUILD_PATH}"
+#             if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+#                 anaconda -t $CONDA_UPLOAD_TOKEN upload -u omodei $HOME/miniconda/conda-bld/linux-64/*.tar.bz2 --force
+#             else
+#                 anaconda -t $CONDA_UPLOAD_TOKEN upload -u omodei $HOME/miniconda/conda-bld/*/*.tar.bz2 --force
+#             fi
+#         fi
+#     fi
+# fi
