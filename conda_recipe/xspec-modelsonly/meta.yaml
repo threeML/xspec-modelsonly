@@ -20,8 +20,10 @@ requirements:
       - {{ compiler('cxx') }} # [linux]
       - {{ compiler('fortran') }} # [linux]
       - libgfortran>=3.0,<4.0
-      - ncurses==5.9
-      - readline==6.2
+      - ncurses==5.9 # [py2k]
+      - ncurses # [py3k]
+      - readline==6.2 # [py2k]
+      - readline # [py3k]
       - toolchain==2.1.2
       - wcslib==5.18
     run:
@@ -29,8 +31,10 @@ requirements:
       - cfitsio==3.410
       - wcslib==5.18
       - libgfortran
-      - ncurses==5.9
-      - readline==6.2
+      - ncurses==5.9 # [py2k]
+      - ncurses # [py3k]
+      - readline==6.2 # [py2k]
+      - readline # [py3k]
 
 # Note that ncurses is only needed to build but I am not
 # sure it's needed at all at run-time. To keep things
