@@ -20,9 +20,9 @@ if $UPDATE_CONDA ; then
     conda update --yes -q conda conda-build
 fi
 
-if [[ ${TRAVIS_OS_NAME} == osx ]];
+if [[ ${TRAVIS_PYTHON_VERSION} == 2.7 ]];
 then
-    conda config --add channels $conda_channel
+    READLINE="readline=${READLINE_VERSION}"
 fi
 
 # Answer yes to all questions (non-interactive)
@@ -34,7 +34,7 @@ conda config --set anaconda_upload no
 # Create test environment
 echo " ======================>  Creating the test environment..."
 
-conda create --yes --name $ENVNAME -c $conda_channel python=$TRAVIS_PYTHON_VERSION readline=${READLINE_VERSION}
+conda create --yes --name $ENVNAME -c $conda_channel python=$TRAVIS_PYTHON_VERSION ${READLINE}
 #libgfortran=${LIBGFORTRAN_VERSION}
 
 # Make sure conda-forge is the first channel
@@ -81,9 +81,9 @@ else
             conda install -c conda-forge anaconda-client
             echo "Uploading..."
             if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-                anaconda -q -t $CONDA_UPLOAD_TOKEN upload -u threeml /home/travis/miniconda/conda-bld/linux-64/*.tar.bz2 --force
+                anaconda -q -t $CONDA_UPLOAD_TOKEN upload -u xspecmodels /home/travis/miniconda/conda-bld/linux-64/*.tar.bz2 --force
             else
-                anaconda -q -t $CONDA_UPLOAD_TOKEN upload -u threeml /Users/travis/miniconda/conda-bld/*/*.tar.bz2 --force
+                anaconda -q -t $CONDA_UPLOAD_TOKEN upload -u xspecmodels /Users/travis/miniconda/conda-bld/*/*.tar.bz2 --force
             fi
         fi
     fi
