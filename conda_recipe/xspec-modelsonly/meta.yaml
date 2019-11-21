@@ -14,6 +14,8 @@ build:
 
 requirements:
     build:
+      - python<3 # [py2k]
+      - python>=3 # [py3k]
       - ccfits==2.5
       - cfitsio==3.410
       - gfortran_osx-64 # [osx]
@@ -28,6 +30,8 @@ requirements:
       - toolchain==2.1.2
       - wcslib==5.18
     run:
+      - python<3 # [py2k]
+      - python>=3 # [py3k]
       - ccfits==2.5
       - cfitsio==3.410
       - wcslib==5.18
