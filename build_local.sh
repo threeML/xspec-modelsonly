@@ -48,7 +48,7 @@ UPDATE_CONDA=false
 
 ENVNAME=xsmodelsonly_test_$TRAVIS_PYTHON_VERSION
 
-conda_channel=conda-forge/label/cf201901
+conda_channel=conda-forge
 
 echo "Running on ${TRAVIS_OS_NAME}"
 echo "Python version: ${TRAVIS_PYTHON_VERSION}"
@@ -84,14 +84,14 @@ conda config --add channels $conda_channel
 # Activate test environment
 echo "=====================> Activate test environment..."
 
-source $CONDA_PREFIX/etc/profile.d/conda.sh
-#source /home/ndilalla/work/fermi/miniconda3/etc/profile.d/conda.sh
+#source $CONDA_PREFIX/etc/profile.d/conda.sh
+source /home/ndilalla/work/fermi/miniconda3/etc/profile.d/conda.sh
 conda activate $ENVNAME
 
 echo "======> getting the file..."
-if ! [ -f xspec-modelsonly-v6.22.1.tar.gz ]; then
-    curl -LO -z xspec-modelsonly-v6.22.1.tar.gz https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
-fi
+#if ! [ -f xspec-modelsonly-v6.22.1.tar.gz ]; then
+#    curl -LO -z xspec-modelsonly-v6.22.1.tar.gz https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
+#fi
 
 # Build package
 echo "Build package..."
