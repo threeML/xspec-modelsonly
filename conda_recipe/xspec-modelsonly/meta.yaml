@@ -15,32 +15,34 @@ build:
 
 requirements:
     build:
-      #- ccfits==2.5
-      #- cfitsio==3.470
-      #- gfortran_osx-64 # [osx]
+      #- ccfits==2.5 # [py2k] 
+      - cfitsio==3.410 # [py2k] 
+      - gfortran_osx-64 # [osx]
       - {{ compiler('c') }} # [linux]
       - {{ compiler('cxx') }} # [linux]
       - {{ compiler('fortran') }} # [linux]
-      #- libgfortran>=3.0,<4.0
-      #- ncurses==5.9 # [py2k]
+      - libgfortran>=3.0,<4.0 # [py2k] 
+      - ncurses==5.9 # [py2k]
       - ncurses # [py3k]
       - readline==6.2 # [py2k]
       - readline # [py3k]
       - toolchain==2.1.2 # [py2k]
-      #- wcslib==5.20
+      - wcslib==5.18 # [py2k]
       - curl
       - perl
     
     host:
-      - ncurses
-      - readline
+      - ncurses==5.9 # [py2k]
+      - ncurses # [py3k]
+      - readline==6.2 # [py2k]
+      - readline # [py3k]
       #- cfitsio==3.470
     
     run:
-      #- ccfits==2.5
-      #- cfitsio==3.470
-      #- wcslib==5.20
-      #- libgfortran
+      - ccfits==2.5 # [py2k]
+      - cfitsio==3.410 # [py2k]
+      - wcslib==5.18 # [py2k]
+      - libgfortran # [py2k]
       - ncurses==5.9 # [py2k]
       - ncurses # [py3k]
       - readline==6.2 # [py2k]
