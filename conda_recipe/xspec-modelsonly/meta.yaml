@@ -36,11 +36,11 @@ requirements:
       - ncurses # [py3k]
       - readline==6.2 # [py2k]
       - readline # [py3k]
-      #- cfitsio==3.470
     
     run:
       - ccfits==2.5 # [py2k]
       - cfitsio==3.410 # [py2k]
+      - cfitsio==3.470 # [py3k]
       - wcslib==5.18 # [py2k]
       - libgfortran # [py2k]
       - ncurses==5.9 # [py2k]
