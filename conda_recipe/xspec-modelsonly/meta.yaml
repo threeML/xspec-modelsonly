@@ -22,7 +22,7 @@ requirements:
       - {{ compiler('cxx') }} # [linux]
       - {{ compiler('fortran') }} # [linux]
       - libgfortran>=3.0,<4.0 # [py2k]
-      - libgfortran-ng==7.5.0 # [py3k]
+      - libgfortran-ng==7.5.0 # [linux]
       - ncurses==5.9 # [py2k]
       - ncurses # [py3k]
       - readline==6.2 # [py2k]
