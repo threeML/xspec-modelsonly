@@ -21,7 +21,7 @@ requirements:
       - {{ compiler('c') }} # [linux]
       - {{ compiler('cxx') }} # [linux]
       - {{ compiler('fortran') }} # [linux]
-      - libgfortran>=3.0,<4.0 # [py2k]
+      - libgfortran>=3.0,<4.0 # [osx]
       - libgfortran-ng==7.5.0 # [linux]
       - ncurses==5.9 # [py2k]
       - ncurses # [py3k]
