@@ -11,7 +11,7 @@ source:
 
 build:
   number: 1 # [py2k]
-  number: 2 # [py3k]
+  number: 3 # [py3k]
 
 requirements:
     build:
@@ -21,15 +21,16 @@ requirements:
       - {{ compiler('c') }} # [linux]
       - {{ compiler('cxx') }} # [linux]
       - {{ compiler('fortran') }} # [linux]
-      - libgfortran>=3.0,<4.0 # [py2k] 
+      - libgfortran>=3.0,<4.0 # [py2k]
+      - libgfortran-ng==7.5.0 # [py3k]
       - ncurses==5.9 # [py2k]
       - ncurses # [py3k]
       - readline==6.2 # [py2k]
       - readline # [py3k]
       - toolchain==2.1.2 # [py2k]
       - wcslib==5.18 # [py2k]
-      - curl
-      - perl
+      - curl # [py3k]
+      - perl # [py3k]
     
     host:
       - ncurses==5.9 # [py2k]
