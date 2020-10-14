@@ -4,7 +4,6 @@ set -e
 # FROM TRAVIS:
 TRAVIS_OS_NAME="unknown"
 TRAVIS_PYTHON_VERSION=3.7
-TRAVIS_BUILD_NUMBER=1
 TRAVIS_EVENT_TYPE="push"
 #TRAVIS_BRANCH="master"
 TRAVIS_BRANCH="no_master"
@@ -48,7 +47,6 @@ UPDATE_CONDA=false
 
 ENVNAME=xsmodelsonly_test_$TRAVIS_PYTHON_VERSION
 
-conda_channel=conda-forge/label/cf201901
 
 echo "Running on ${TRAVIS_OS_NAME}"
 echo "Python version: ${TRAVIS_PYTHON_VERSION}"
@@ -62,6 +60,9 @@ fi
 if [[ ${TRAVIS_PYTHON_VERSION} == 2.7 ]];
 then
     READLINE="readline=${READLINE_VERSION}"
+    conda_channel=conda-forge/label/cf201901
+else
+    conda_channel=conda-forge
 fi
 
 # Answer yes to all questions (non-interactive)
@@ -89,8 +90,9 @@ source $CONDA_PREFIX/etc/profile.d/conda.sh
 conda activate $ENVNAME
 
 echo "======> getting the file..."
-if ! [ -f xspec-modelsonly-v6.22.1.tar.gz ]; then
-    curl -LO -z xspec-modelsonly-v6.22.1.tar.gz https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
+if ! [ -f heasoft-6.25src.tar.gz ]; then
+#    curl -LO -z xspec-modelsonly-v6.22.1.tar.gz https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
+     curl -LO -z heasoft-6.25src.tar.gz https://www.dropbox.com/s/zw6giglocr1z3o0/heasoft-6.25src.tar.gz
 fi
 
 # Build package
