@@ -71,7 +71,7 @@ jobs:
 
                   else
                   # there is some strange error about the prefix length
-                  conda build --no-build-id --python=${{matrix.python-version}}conda_recipe/xspec-modelsonly
+                  conda build --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
                   fi
             
             - name: Intall the Package
@@ -133,7 +133,7 @@ jobs:
 
                   else
                   # there is some strange error about the prefix length
-                  conda build --no-build-id --python=${{matrix.python-version}}conda_recipe/xspec-modelsonly
+                  conda build --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
                   fi
 
             - name: Publish to Conda
