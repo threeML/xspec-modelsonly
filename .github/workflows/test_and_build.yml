@@ -46,7 +46,7 @@ jobs:
                   activate-environment: "test_env"
                   auto-activate-base: false
                   architecture: "x64"
-                  conda-build-version: 3.18
+                  conda-build-version: 3.20
                   python-version: ${{ matrix.python-version }}
                   auto-update-conda: true
                   environment-file: ci/environment.yml
@@ -107,7 +107,7 @@ jobs:
                   activate-environment: "test_env"
                   auto-activate-base: false
                   architecture: "x64"
-                  conda-build-version: 3.18
+                  conda-build-version: 3.20
                   python-version: ${{ matrix.python-version }}
                   auto-update-conda: true
                   environment-file: ci/environment.yml
