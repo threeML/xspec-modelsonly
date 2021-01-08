@@ -77,7 +77,7 @@ jobs:
             - name: Intall the Package
               shell: bash -l {0}
               run: |
-                  conda install --use-local -c $conda_channel xspec-modelsonly
+                  conda install --use-local -c conda-forge xspec-modelsonly
                   echo "======> dependency list..."
                   conda search xspec-modelsonly=6.25 --use-local --info
 
