@@ -67,7 +67,7 @@ jobs:
                   # Build package
 
                   if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
-                  conda build --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+                  conda build --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
 
                   else
                   # there is some strange error about the prefix length
@@ -129,7 +129,7 @@ jobs:
                   # Build package
 
                   if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
-                  conda build --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+                  conda build --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
 
                   else
                   # there is some strange error about the prefix length
