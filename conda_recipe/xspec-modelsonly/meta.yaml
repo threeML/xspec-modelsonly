@@ -11,8 +11,8 @@ build:
 requirements:
     build:
       - gfortran_osx-64 # [osx]
-      - {{ compiler('c') }} # [osx]
-      - {{ compiler('cxx') }} # [osx]
+      #- {{ compiler('c') }} # [osx]
+      #- {{ compiler('cxx') }} # [osx]
       - {{ compiler('fortran') }} # [linux]
       #- libgfortran>=3.0,<4.0 # [osx]
       #- libgfortran-ng==7.5.0 # [linux]

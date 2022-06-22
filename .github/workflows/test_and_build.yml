@@ -31,7 +31,13 @@ jobs:
                 python-version: [3.9]
 
         steps:
-            - uses: actions/checkout@v2
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: XCode
+              uses: maxim-lobanov/setup-xcode@v1
+              with:
+                  xcode-version: '12.4'
+              if: runner.os == 'macOS'
             - name: Set up Python
               uses: actions/setup-python@v2
               with:
