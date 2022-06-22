@@ -25,6 +25,7 @@ jobs:
         if: startsWith(github.event.ref, 'refs/tags') == false
         runs-on: ${{ matrix.os }}
         strategy:
+            fail-fast: false
             matrix:
                 os: [ubuntu-20.04, macos-10.15]
                 python-version: [3.9]
