@@ -2,26 +2,26 @@ echo "================="
 echo $PWD
 echo $RECIPE_DIR
 
-tar xf heasoft-6.25src.tar.gz
+tar xf heasoft-6.30.1src.tar.gz
 
 CWD="$PWD"
-XSPEC_PATCH="Xspatch_121001l.tar.gz"
-XSPEC_PATCH_INSTALLER="patch_install_4.10.tcl"
-XSPEC_MODELS_ONLY=heasoft-6.25
+XSPEC_PATCH="Xspatch_121201c.tar.gz"
+XSPEC_PATCH_INSTALLER="patch_install_4.15.tcl"
+XSPEC_MODELS_ONLY=heasoft-6.30.1
 
 # If a patch is required, download the necessary file and apply it
 if [ -n "$XSPEC_PATCH" ]
 then
     cd ${XSPEC_MODELS_ONLY}/Xspec/src;
-    curl -LO -z ${XSPEC_PATCH} http://heasarc.gsfc.nasa.gov/docs/xanadu/xspec/issues/archive/${XSPEC_PATCH};
+    curl -LO -z ${XSPEC_PATCH} https://heasarc.gsfc.nasa.gov/docs/xanadu/xspec/issues/archive/${XSPEC_PATCH};
     curl -LO -z ${XSPEC_PATCH_INSTALLER} https://heasarc.gsfc.nasa.gov/docs/xanadu/xspec/issues/archive/${XSPEC_PATCH_INSTALLER};
     tclsh ${XSPEC_PATCH_INSTALLER} -m -n;
-    rm -rf XSFits;
+    #rm -rf XSFits;
     cd ${CWD};
 fi
 
 #Copy in the OGIPTable fix
-cp $RECIPE_DIR/../../OGIPTable.cxx heasoft-6.25/Xspec/src/XSModel/Model/Component/OGIPTable
+#cp $RECIPE_DIR/../../OGIPTable.cxx heasoft-6.25/Xspec/src/XSModel/Model/Component/OGIPTable
 
 cd ${XSPEC_MODELS_ONLY}/BUILD_DIR
 
@@ -82,7 +82,9 @@ echo "LEAVE IT HERE" > ${PREFIX}/lib/Xspec/headas/DO_NOT_REMOVE
 cp -rv ${SRC_DIR}/xspec-modelsonly-build/spectral ${PREFIX}/lib/Xspec
 
 mkdir -p ${PREFIX}/include
+mkdir -p ${PREFIX}/include/XSFunctions
+mkdir -p ${PREFIX}/include/XSFunctions/Utilities
 
-cp -L ${SRC_DIR}/xspec-modelsonly-build/x86*/include/xsFortran.h ${PREFIX}/include
+cp -L ${SRC_DIR}/xspec-modelsonly-build/Xspec/x86*/include/XSFunctions/Utilities/xsFortran.h ${PREFIX}/include/XSFunctions/Utilities
 cp -L ${SRC_DIR}/xspec-modelsonly-build/x86*/include/xsTypes.h ${PREFIX}/include
-cp -L ${SRC_DIR}/xspec-modelsonly-build/x86*/include/funcWrappers.h ${PREFIX}/include
+cp -L ${SRC_DIR}/xspec-modelsonly-build/Xspec/x86*/include/XSFunctions/funcWrappers.h ${PREFIX}/include/XSFunctions

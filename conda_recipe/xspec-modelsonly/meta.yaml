@@ -1,53 +1,34 @@
 package:
    name: xspec-modelsonly
-   version: "6.25"
+   version: "6.30.1"
 
 source:
-  #  md5: 0abea9e1609fcdc2c3e3ada92043d17b
-  # url: https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
-  #path: ../../xspec-modelsonly-v6.22.1.tar.gz
-  path: ../../heasoft-6.25src.tar.gz
-  #fn: xspec-modelsonly-v6.22.1.tar.gz
+  path: ../../heasoft-6.30.1src.tar.gz
 
 build:
-  number: 1 # [py2k]
   number: 3 # [py3k]
 
 requirements:
     build:
-      #- ccfits==2.5 # [py2k] 
-      - cfitsio==3.410 # [py2k] 
       - gfortran_osx-64 # [osx]
       #- {{ compiler('c') }} # [linux]
       #- {{ compiler('cxx') }} # [linux]
       - {{ compiler('fortran') }} # [linux]
-      - libgfortran>=3.0,<4.0 # [osx]
-      - libgfortran-ng==7.5.0 # [linux]
-      - ncurses==5.9 # [py2k]
-      - ncurses # [py3k]
-      - readline==6.2 # [py2k]
-      - readline # [py3k]
-      - toolchain==2.1.2 # [py2k]
-      - wcslib==5.18 # [py2k]
-      - curl # [py3k]
-      - perl # [py3k]
+      #- libgfortran>=3.0,<4.0 # [osx]
+      #- libgfortran-ng==7.5.0 # [linux]
+      - ncurses
+      - readline
+      - curl
+      - perl
     
     host:
-      - ncurses==5.9 # [py2k]
-      - ncurses # [py3k]
-      - readline==6.2 # [py2k]
-      - readline # [py3k]
+      - ncurses
+      - readline
     
     run:
-      - ccfits==2.5 # [py2k]
-      - cfitsio==3.410 # [py2k]
-      - cfitsio==3.470 # [py3k]
-      - wcslib==5.18 # [py2k]
-      - libgfortran # [py2k]
-      - ncurses==5.9 # [py2k]
-      - ncurses # [py3k]
-      - readline==6.2 # [py2k]
-      - readline # [py3k]
+      - cfitsio
+      - ncurses
+      - readline
 
 about:
   home: https://heasarc.gsfc.nasa.gov/xanadu/xspec/

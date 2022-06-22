@@ -26,8 +26,8 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [ubuntu-20.04, macos-latest]
-                python-version: [3.7]
+                os: [ubuntu-20.04, macos-10.15]
+                python-version: [3.9]
 
         steps:
             - uses: actions/checkout@v2
@@ -45,8 +45,9 @@ jobs:
               with:
                   activate-environment: "test_env"
                   auto-activate-base: false
+                  mamba-version: "*"
                   architecture: "x64"
-                  conda-build-version: 3.20.2
+                  #conda-build-version: 3.20.2
                   python-version: ${{ matrix.python-version }}
                   auto-update-conda: true
                   environment-file: ci/environment.yml
@@ -57,21 +58,23 @@ jobs:
                   echo "HOME= ${HOME}"
                   echo "Python version: ${{matrix.python-version}}"
                   echo "======> getting the file..."
-                  if ! [ -f heasoft-6.25src.tar.gz ]; then
-                      curl -LO -z heasoft-6.25src.tar.gz https://www.dropbox.com/s/zw6giglocr1z3o0/heasoft-6.25src.tar.gz
+                  if ! [ -f heasoft-6.30.1src.tar.gz ]; then
+                      curl -LO -z heasoft-6.30.1src.tar.gz https://www.dropbox.com/s/sv6ge6libcxfvas/heasoft-6.30.1src.tar.gz
                   fi
 
             - name: Build the Distribution
               shell: bash -l {0}
               run: |
                   # Build package
+                  
+                  conda install -c conda-forge boa -n base
 
                   if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
-                  conda build --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+                  conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
 
                   else
                   # there is some strange error about the prefix length
-                  conda build --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+                  conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
                   fi
             
             - name: Intall the Package
@@ -79,7 +82,7 @@ jobs:
               run: |
                   conda install --use-local -c conda-forge xspec-modelsonly
                   echo "======> dependency list..."
-                  conda search xspec-modelsonly=6.25 --use-local --info
+                  conda search xspec-modelsonly=6.30.1 --use-local --info
 
     publish-conda:
         name: Publish to Conda
@@ -87,8 +90,8 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [ubuntu-latest, macos-latest]
-                python-version: [3.7]
+                os: [ubuntu-20.04, macos-10.15]
+                python-version: [3.9]
 
         steps:
             - uses: actions/checkout@v2
@@ -106,8 +109,9 @@ jobs:
               with:
                   activate-environment: "test_env"
                   auto-activate-base: false
+                  mamba-version: "*"
                   architecture: "x64"
-                  conda-build-version: 3.20.2
+                  #conda-build-version: 3.20.2
                   python-version: ${{ matrix.python-version }}
                   auto-update-conda: true
                   environment-file: ci/environment.yml
@@ -119,21 +123,23 @@ jobs:
                   echo "HOME= ${HOME}"
                   echo "Python version: ${{matrix.python-version}}"
                   echo "======> getting the file..."
-                  if ! [ -f heasoft-6.25src.tar.gz ]; then
-                      curl -LO -z heasoft-6.25src.tar.gz https://www.dropbox.com/s/zw6giglocr1z3o0/heasoft-6.25src.tar.gz
+                  if ! [ -f heasoft-6.30.1src.tar.gz ]; then
+                      curl -LO -z heasoft-6.30.1src.tar.gz https://www.dropbox.com/s/sv6ge6libcxfvas/heasoft-6.30.1src.tar.gz
                   fi
 
             - name: Build the Distribution
               shell: bash -l {0}
               run: |
                   # Build package
+                  
+                  conda install -c conda-forge boa -n base
 
                   if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
-                  conda build --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+                  conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
 
                   else
                   # there is some strange error about the prefix length
-                  conda build --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+                  conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
                   fi
 
             - name: Publish to Conda
