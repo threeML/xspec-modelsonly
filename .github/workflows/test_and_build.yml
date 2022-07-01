@@ -27,17 +27,17 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                os: [ubuntu-20.04, macos-10.15]
+                os: [ubuntu-20.04, macos-latest]
                 python-version: [3.9]
 
         steps:
             - name: Checkout
               uses: actions/checkout@v2
-            #- name: XCode
-            #  uses: maxim-lobanov/setup-xcode@v1
-            #  with:
-            #      xcode-version: latest
-            #  if: runner.os == 'macOS'
+            - name: XCode
+              uses: maxim-lobanov/setup-xcode@v1
+              with:
+                  xcode-version: latest
+              if: runner.os == 'macOS'
             - name: Set up Python
               uses: actions/setup-python@v2
               with:
@@ -81,10 +81,11 @@ jobs:
 
                   else
                   # there is some strange error about the prefix length
-                  brew install gcc
-                  export CC=/usr/local/bin/gcc-11
-                  export CXX=/usr/local/bin/g++-11
-                  export FC=/usr/local/bin/gfortran-11
+                  #brew install gcc
+                  #export CC=/usr/local/bin/gcc-11
+                  #export CXX=/usr/local/bin/g++-11
+                  #export FC=/usr/local/bin/gfortran-11
+                  xcode-select --install
                   conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
                   fi
             

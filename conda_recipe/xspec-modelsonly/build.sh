@@ -9,9 +9,9 @@ XSPEC_PATCH="Xspatch_121201c.tar.gz"
 XSPEC_PATCH_INSTALLER="patch_install_4.15.tcl"
 XSPEC_MODELS_ONLY=heasoft-6.30.1
 
-if [ "`uname -s`" == "Darwin" ] ; then
-  CONDA_BUILD_SYSROOT=/opt/MacOSX10.9.sdk
-fi
+#if [ "`uname -s`" == "Darwin" ] ; then
+#  CONDA_BUILD_SYSROOT=/opt/MacOSX10.9.sdk
+#fi
 
 # If a patch is required, download the necessary file and apply it
 if [ -n "$XSPEC_PATCH" ]
