@@ -54,7 +54,7 @@ jobs:
                   auto-activate-base: false
                   mamba-version: "*"
                   architecture: "x64"
-                  conda-build-version: 3.20.2
+                  conda-build-version: "*"
                   python-version: ${{ matrix.python-version }}
                   auto-update-conda: true
                   environment-file: ci/environment.yml
