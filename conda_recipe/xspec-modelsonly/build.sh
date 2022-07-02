@@ -37,6 +37,7 @@ export CXXFLAGS="-std=c++11 -Wno-c++11-narrowing -Wall -Wno-deprecated -I$CONDA_
 #export CXXFLAGS="-std=c++14 -I$CONDA_PREFIX/include"
 export LDFLAGS="$LDFLAGS -L$CONDA_PREFIX/lib"
 # -L${PREFIX}/lib"
+export CCTEST="echo"
 
 #Patch the source to avoid Python for Xspec and heasoftpy
 rm -rvf ../heacore/heasoftpy
