@@ -5,4 +5,4 @@ cxx_compiler:
   - gxx # [linux]
   - clangxx # [osx]
 CONDA_BUILD_SYSROOT:
-  - /opt/MacOSX10.9.sdk  # [osx]
+  - /opt/MacOSX10.10.sdk  # [osx]

@@ -54,7 +54,7 @@ jobs:
                   auto-activate-base: false
                   mamba-version: "*"
                   architecture: "x64"
-                  #conda-build-version: 3.20.2
+                  conda-build-version: 3.20.2
                   python-version: ${{ matrix.python-version }}
                   auto-update-conda: true
                   environment-file: ci/environment.yml
@@ -74,19 +74,16 @@ jobs:
               run: |
                   # Build package
                   
-                  conda install -c conda-forge boa -n base
 
                   if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
+                  
+                  conda install -c conda-forge boa -n base
                   conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
 
                   else
-                  # there is some strange error about the prefix length
-                  #brew install gcc
-                  #export CC=/usr/local/bin/gcc-11
-                  #export CXX=/usr/local/bin/g++-11
-                  #export FC=/usr/local/bin/gfortran-11
-                  
-                  conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+
+                  conda install -c conda-forge clang_osx-64 clangxx_osx-64 gfortran_osx-64
+                  conda build --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
                   fi
             
             - name: Intall the Package
