@@ -30,7 +30,7 @@ cd ${XSPEC_MODELS_ONLY}/BUILD_DIR
 
 export CFLAGS="-I$CONDA_PREFIX/include"
 export CXXFLAGS="-std=c++11 -Wno-c++11-narrowing -Wall -Wno-deprecated -I$CONDA_PREFIX/include"
-export LDFLAGS="$LDFLAGS -L$CONDA_PREFIX/lib"
+export LDFLAGS="$LDFLAGS -L$CONDA_PREFIX/lib -undefined dynamic_lookup"
 # -L${PREFIX}/lib"
 
 # Patch the configure script so XSModel is built
