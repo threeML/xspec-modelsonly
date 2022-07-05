@@ -9,6 +9,10 @@ XSPEC_PATCH="Xspatch_121201c.tar.gz"
 XSPEC_PATCH_INSTALLER="patch_install_4.15.tcl"
 XSPEC_MODELS_ONLY=heasoft-6.30.1
 
+#if [ "`uname -s`" == "Darwin" ] ; then
+#  CONDA_BUILD_SYSROOT=/opt/MacOSX10.9.sdk
+#fi
+
 # If a patch is required, download the necessary file and apply it
 if [ -n "$XSPEC_PATCH" ]
 then
@@ -16,7 +20,7 @@ then
     curl -LO -z ${XSPEC_PATCH} https://heasarc.gsfc.nasa.gov/docs/xanadu/xspec/issues/archive/${XSPEC_PATCH};
     curl -LO -z ${XSPEC_PATCH_INSTALLER} https://heasarc.gsfc.nasa.gov/docs/xanadu/xspec/issues/archive/${XSPEC_PATCH_INSTALLER};
     tclsh ${XSPEC_PATCH_INSTALLER} -m -n;
-    #rm -rf XSFits;
+    rm -rf XSFits;
     cd ${CWD};
 fi
 
@@ -30,12 +34,20 @@ cd ${XSPEC_MODELS_ONLY}/BUILD_DIR
 
 export CFLAGS="-I$CONDA_PREFIX/include"
 export CXXFLAGS="-std=c++11 -Wno-c++11-narrowing -Wall -Wno-deprecated -I$CONDA_PREFIX/include"
+
 export LDFLAGS="$LDFLAGS -L$CONDA_PREFIX/lib -undefined dynamic_lookup"
 # -L${PREFIX}/lib"
+export CCTEST="echo"
+
+#Patch the source to avoid Python for Xspec and heasoftpy
+rm -rvf ../heacore/heasoftpy
+sed -i.orig "s|python3 python python2 python2.7 python2.6|python4|g" ../Xspec/BUILD_DIR/configure
+sed -i.orig "s|python3 python python2 python2.7 python2.6|python4|g" ../heacore/BUILD_DIR/configure
 
 # Patch the configure script so XSModel is built
 sed -i.orig "s|src/XSFunctions|src/XSFunctions src/XSModel|g" configure
 #sed -i.orig "s|wcslib cfitsio CCfits heasp|cfitsio heasp|g" configure
+
 
 if [ "$(uname)" == "Linux" ]; then
     ./configure --prefix=${SRC_DIR}/xspec-modelsonly-build --enable-xs-models-only --disable-x
