@@ -78,7 +78,7 @@ jobs:
                   if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
                   
                   conda install -c conda-forge boa -n base
-                  conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+                  conda build --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
 
                   else
 
