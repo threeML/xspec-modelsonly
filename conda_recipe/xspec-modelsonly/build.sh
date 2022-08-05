@@ -1,6 +1,8 @@
 echo "================="
 echo $PWD
 echo $RECIPE_DIR
+echo $CC
+echo $CXX
 
 tar xf heasoft-6.30.1src.tar.gz
 
