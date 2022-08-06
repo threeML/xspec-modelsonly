@@ -1,0 +1,34 @@
+package:
+   name: xspec-modelsonly
+   version: "6.30.1"
+
+source:
+  path: ../../heasoft-6.30.1src.tar.gz
+
+build:
+  number: 3 # [py3k]
+
+requirements:
+    build:
+      - gfortran_osx-64 # [osx]
+      - {{ compiler('c') }} # [osx]
+      - {{ compiler('cxx') }} # [osx]
+      - {{ compiler('fortran') }} # [linux]
+      #- libgfortran>=3.0,<4.0 # [osx]
+      #- libgfortran-ng==7.5.0 # [linux]
+      - ncurses
+      - readline
+      - curl
+      - perl
+    
+    host:
+      - ncurses
+      - readline
+    
+    run:
+      - cfitsio
+      - ncurses
+      - readline
+
+about:
+  home: https://heasarc.gsfc.nasa.gov/xanadu/xspec/
