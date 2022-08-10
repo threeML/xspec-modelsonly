@@ -104,6 +104,7 @@ jobs:
 
                   conda install -c conda-forge clang_osx-64 clangxx_osx-64 gfortran_osx-64
                   conda build --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+
                   fi
             
             - name: Intall the Package
@@ -164,7 +165,7 @@ jobs:
                   conda install -c conda-forge boa -n base
 
                   if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
-                  conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+                  conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly-linux
 
                   else
                   # there is some strange error about the prefix length
