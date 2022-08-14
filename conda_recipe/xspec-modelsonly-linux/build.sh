@@ -3,6 +3,9 @@ echo $PWD
 echo $RECIPE_DIR
 echo $CC
 echo $CXX
+echo $CONDA_PREFIX
+echo $BUILD_PREFIX
+
 
 tar xf heasoft-6.30.1src.tar.gz
 
@@ -37,7 +40,8 @@ cd ${XSPEC_MODELS_ONLY}/BUILD_DIR
 export CFLAGS="-I$CONDA_PREFIX/include"
 export CXXFLAGS="-std=c++11 -Wno-c++11-narrowing -Wall -Wno-deprecated -I$CONDA_PREFIX/include"
 
-export LDFLAGS="$LDFLAGS -L$CONDA_PREFIX/lib -undefined dynamic_lookup --enable-shared"
+#export LDFLAGS="$LDFLAGS -L$CONDA_PREFIX/lib -undefined dynamic_lookup --enable-shared"
+export LDFLAGS="$LDFLAGS -L$CONDA_PREFIX/lib "
 # -L${PREFIX}/lib"
 export CCTEST="echo"
 
