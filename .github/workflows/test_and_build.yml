@@ -60,25 +60,12 @@ jobs:
                   environment-file: ci/environment.yml
                   channels: conda-forge
 
-            - name: Cache XPSEC
-              uses: actions/cache@v2
-              id: cache-xspec
-              with:
-                path: ~/heasoft-6.30.1src.tar.gz
-                key: xspec-ver3
+
             - name: Get file
-              env:
-                  CACHE_HIT: ${{steps.cache-xspec.outputs.cache-hit}}
+
               shell: bash -l {0}
               run: |
                   echo "getting latest heasoft bundle";
-                  if [[ "$CACHE_HIT" == 'true' ]]; then
-
-
-                  echo "NOOOO"
-
-                  else
-
                   echo "HOME= ${HOME}"
                   echo "Python version: ${{matrix.python-version}}"
                   echo "======> getting the file..."
@@ -87,7 +74,6 @@ jobs:
                       curl -LO -z heasoft-6.30.1src.tar.gz https://www.dropbox.com/s/sv6ge6libcxfvas/heasoft-6.30.1src.tar.gz
                   fi
 
-                  fi
 
             - name: Build the Distribution
               shell: bash -l {0}
