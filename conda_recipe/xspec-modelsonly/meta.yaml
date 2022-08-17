@@ -20,6 +20,7 @@ requirements:
       - readline
       - curl
       - perl
+      - zlib
     
     host:
       - ncurses
