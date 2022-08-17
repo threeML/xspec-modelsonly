@@ -91,7 +91,7 @@ jobs:
                   if [[ $? -ne 0 ]]; then
                   echo "macOS 10.9 SDK download failed"
                   fi
-                  tar -C /opt -xf MacOSX10.9.sdk.tar.xz
+                  sudo tar -C /opt -xf MacOSX10.9.sdk.tar.xz
                   #conda install -c conda-forge clang_osx-64 clangxx_osx-64 gfortran_osx-64
                   conda build --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
 

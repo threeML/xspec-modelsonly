@@ -27,7 +27,7 @@ elif [[ "$OSTYPE" == darwin* ]]; then
         if [[ $? -ne 0 ]]; then
         echo "macOS 10.9 SDK download failed"
         fi
-        tar -C /opt/SDK/10.9SDK -xf MacOSX10.9.sdk.tar.xz
+        sudo tar -C /opt -xf MacOSX10.9.sdk.tar.xz
 elif [[ "$OSTYPE" == "cygwin" ]]; then
 
         # POSIX compatibility layer and Linux environment emulation for Windows
