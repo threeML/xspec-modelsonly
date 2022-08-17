@@ -13,6 +13,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 
         TRAVIS_OS_NAME="linux"
 
+        #compilers="gcc_linux-64 gxx_linux-64 gfortran_linux-64"
 
 elif [[ "$OSTYPE" == darwin* ]]; then
 
@@ -20,7 +21,13 @@ elif [[ "$OSTYPE" == darwin* ]]; then
 
         TRAVIS_OS_NAME="osx"
 
-
+        #compilers="clang_osx-64 clangxx_osx-64 gfortran_osx-64"
+        #Download the macOS 10.9 SDK to the CONDA_BUILD_SYSROOT location for the Conda Compilers to work
+        curl -LO -z MacOSX10.9.sdk.tar.xz https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz
+        if [[ $? -ne 0 ]]; then
+        echo "macOS 10.9 SDK download failed"
+        fi
+        tar -C /opt/SDK/10.9SDK -xf MacOSX10.9.sdk.tar.xz
 elif [[ "$OSTYPE" == "cygwin" ]]; then
 
         # POSIX compatibility layer and Linux environment emulation for Windows
@@ -86,18 +93,20 @@ if ! [ -f heasoft-6.30.1src.tar.gz ]; then
 fi
 
 # Build package
-echo "Build package..."
+echo "======> Build package..."
 
 #conda install conda-verify
 
-conda install -c conda-forge boa -n base
+#conda install -c conda-forge boa -n base
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-    conda mambabuild --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
+    #conda mambabuild --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
+    conda build --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
     #conda index $HOME/miniconda/conda-bld
 else
     # there is some strange error about the prefix length
-    conda mambabuild --no-build-id --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
+    #conda mambabuild --no-build-id --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
+    conda build --no-build-id --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
     #conda index $HOME/miniconda/conda-bld
 fi
 echo "======> installing..."

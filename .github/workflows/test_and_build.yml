@@ -80,15 +80,19 @@ jobs:
               run: |
                   # Build package
                   
-
                   if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
                   
-                  conda install -c conda-forge boa -n base
-                  conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly-linux
+                  #conda install -c conda-forge boa -n base
+                  #conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly-linux
+                  conda build --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly-linux
 
                   else
-
-                  conda install -c conda-forge clang_osx-64 clangxx_osx-64 gfortran_osx-64
+                  curl -LO -z MacOSX10.9.sdk.tar.xz https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz
+                  if [[ $? -ne 0 ]]; then
+                  echo "macOS 10.9 SDK download failed"
+                  fi
+                  tar -C /opt/SDK/10.9SDK -xf MacOSX10.9.sdk.tar.xz
+                  #conda install -c conda-forge clang_osx-64 clangxx_osx-64 gfortran_osx-64
                   conda build --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
 
                   fi

@@ -1,4 +1,4 @@
-echo "================="
+echo "================= build.sh =================="
 echo $PWD
 echo $RECIPE_DIR
 echo $CC
