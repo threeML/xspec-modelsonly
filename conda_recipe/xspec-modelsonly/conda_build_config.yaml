@@ -1,8 +1,6 @@
 c_compiler:
-  - gcc # [linux]
   - clang # [osx]
 cxx_compiler:
-  - gxx # [linux]
   - clangxx # [osx]
 fortran_compiler:
   - gfortran # [osx]
