@@ -7,4 +7,7 @@ cxx_compiler:
 fortran_compiler:
   - gfortran # [osx]
 CONDA_BUILD_SYSROOT:
-  - /opt/MacOSX10.9.sdk  # [osx]
+  #- /opt/MacOSX10.9.sdk  # [osx]
+  - /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk # [osx]
+#numpy:
+#  - 1.20\
