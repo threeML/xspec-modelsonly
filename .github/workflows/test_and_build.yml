@@ -31,6 +31,12 @@ jobs:
                 python-version: [3.9]
 
         steps:
+            - name: Maximize build space
+              uses: easimon/maximize-build-space@master
+              with:
+                root-reserve-mb: 1024
+                temp-reserve-mb: 1024
+                swap-size-mb: 4096
             - name: Checkout
               uses: actions/checkout@v2
             - name: XCode
@@ -83,17 +89,18 @@ jobs:
                   if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
                   
                   #conda install -c conda-forge boa -n base
-                  
                   #conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
+                  
                   conda build --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
 
                   else
-                  curl -LO -z MacOSX10.9.sdk.tar.xz https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz
-                  if [[ $? -ne 0 ]]; then
-                  echo "macOS 10.9 SDK download failed"
-                  fi
-                  sudo tar -C /opt -xf MacOSX10.9.sdk.tar.xz
+                  #curl -LO -z MacOSX10.9.sdk.tar.xz https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz
+                  #if [[ $? -ne 0 ]]; then
+                  #echo "macOS 10.9 SDK download failed"
+                  #fi
+                  #sudo tar -C /opt -xf MacOSX10.9.sdk.tar.xz
                   #conda install -c conda-forge clang_osx-64 clangxx_osx-64 gfortran_osx-64
+                  
                   conda build --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
 
                   fi

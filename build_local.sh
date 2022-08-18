@@ -7,6 +7,7 @@ TRAVIS_PYTHON_VERSION=3.9
 TRAVIS_EVENT_TYPE="push"
 #TRAVIS_BRANCH="master"
 TRAVIS_BRANCH="no_master"
+
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 
         # Linux
@@ -23,11 +24,12 @@ elif [[ "$OSTYPE" == darwin* ]]; then
 
         #compilers="clang_osx-64 clangxx_osx-64 gfortran_osx-64"
         #Download the macOS 10.9 SDK to the CONDA_BUILD_SYSROOT location for the Conda Compilers to work
-        curl -LO -z MacOSX10.9.sdk.tar.xz https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz
-        if [[ $? -ne 0 ]]; then
-        echo "macOS 10.9 SDK download failed"
-        fi
-        sudo tar -C /opt -xf MacOSX10.9.sdk.tar.xz
+        #curl -LO -z MacOSX10.9.sdk.tar.xz https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz
+        #if [[ $? -ne 0 ]]; then
+        #echo "macOS 10.9 SDK download failed"
+        #fi
+        #sudo tar -C /opt -xf MacOSX10.9.sdk.tar.xz
+
 elif [[ "$OSTYPE" == "cygwin" ]]; then
 
         # POSIX compatibility layer and Linux environment emulation for Windows
