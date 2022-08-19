@@ -35,11 +35,14 @@ jobs:
               run: |
                 echo " ----- Disk space before cleaning ----- "
                 df -h
+                df -h /home
                 sudo rm -rf /usr/share/dotnet
                 sudo rm -rf /opt/ghc
                 sudo rm -rf "/usr/local/share/boost"
                 sudo rm -rf "$AGENT_TOOLSDIRECTORY"
                 echo " ----- Disk space after cleaning ----- "
+                df -h
+                df -h /home
               if: runner.os == 'Linux'
             - name: Checkout
               uses: actions/checkout@v2
@@ -122,17 +125,35 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                os: [ubuntu-20.04, macos-10.15]
+                os: [uubuntu-latest, macos-latest]
                 python-version: [3.9]
 
         steps:
+            - name: Maximize build space
+              run: |
+                echo " ----- Disk space before cleaning ----- "
+                df -h
+                df -h /home
+                sudo rm -rf /usr/share/dotnet
+                sudo rm -rf /opt/ghc
+                sudo rm -rf "/usr/local/share/boost"
+                sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+                echo " ----- Disk space after cleaning ----- "
+                df -h
+                df -h /home
+              if: runner.os == 'Linux'
             - uses: actions/checkout@v2
+            - name: XCode
+              uses: maxim-lobanov/setup-xcode@v1
+              with:
+                  xcode-version: latest
+              if: runner.os == 'macOS'
             - name: Set up Python
               uses: actions/setup-python@v2
               with:
                   python-version: ${{ matrix.python-version }}
             - name: Cache conda
-              uses: actions/cache@v1
+              uses: actions/cache@v2
               with:
                   path: ~/conda_pkgs_dir
                   key: conda-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('environment-ci.yml') }}
@@ -143,7 +164,7 @@ jobs:
                   auto-activate-base: false
                   #mamba-version: "*"
                   architecture: "x64"
-                  #conda-build-version: 3.20.2
+                  conda-build-version: "*"
                   python-version: ${{ matrix.python-version }}
                   auto-update-conda: true
                   environment-file: ci/environment.yml
@@ -164,17 +185,7 @@ jobs:
               run: |
                   # Build package
                   
-                  #conda install -c conda-forge boa -n base
-
-                  if [[ "${{matrix.os}}" == "ubuntu-latest" ]]; then
-                  #conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
                   conda build --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
-
-                  else
-                  # there is some strange error about the prefix length
-                  #conda mambabuild --no-build-id --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
-                  conda build --python=${{matrix.python-version}} conda_recipe/xspec-modelsonly
-                  fi
 
             - name: Publish to Conda
               shell: bash -l {0}
