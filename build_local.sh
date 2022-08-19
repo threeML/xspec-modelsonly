@@ -3,16 +3,18 @@
 set -e
 # FROM TRAVIS:
 TRAVIS_OS_NAME="unknown"
-TRAVIS_PYTHON_VERSION=3.7
+TRAVIS_PYTHON_VERSION=3.9
 TRAVIS_EVENT_TYPE="push"
 #TRAVIS_BRANCH="master"
 TRAVIS_BRANCH="no_master"
+
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
 
         # Linux
 
         TRAVIS_OS_NAME="linux"
 
+        #compilers="gcc_linux-64 gxx_linux-64 gfortran_linux-64"
 
 elif [[ "$OSTYPE" == darwin* ]]; then
 
@@ -20,6 +22,13 @@ elif [[ "$OSTYPE" == darwin* ]]; then
 
         TRAVIS_OS_NAME="osx"
 
+        #compilers="clang_osx-64 clangxx_osx-64 gfortran_osx-64"
+        #Download the macOS 10.9 SDK to the CONDA_BUILD_SYSROOT location for the Conda Compilers to work
+        #curl -LO -z MacOSX10.9.sdk.tar.xz https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/MacOSX10.9.sdk.tar.xz
+        #if [[ $? -ne 0 ]]; then
+        #echo "macOS 10.9 SDK download failed"
+        #fi
+        #sudo tar -C /opt -xf MacOSX10.9.sdk.tar.xz
 
 elif [[ "$OSTYPE" == "cygwin" ]]; then
 
@@ -41,8 +50,6 @@ fi
 
 # Build and test...
 # FLAGS AND ENVIRONMENT:
-LIBGFORTRAN_VERSION="3.0"
-READLINE_VERSION="6.2"
 UPDATE_CONDA=false
 
 ENVNAME=xsmodelsonly_test_$TRAVIS_PYTHON_VERSION
@@ -57,13 +64,7 @@ if $UPDATE_CONDA ; then
     conda update --yes -q conda conda-build
 fi
 
-if [[ ${TRAVIS_PYTHON_VERSION} == 2.7 ]];
-then
-    READLINE="readline=${READLINE_VERSION}"
-    conda_channel=conda-forge/label/cf201901
-else
-    conda_channel=conda-forge
-fi
+conda_channel=conda-forge
 
 # Answer yes to all questions (non-interactive)
 conda config --set always_yes true
@@ -75,7 +76,6 @@ conda config --set anaconda_upload no
 echo " ======================>  Creating the test environment..."
 
 conda create --yes --name $ENVNAME -c $conda_channel python=$TRAVIS_PYTHON_VERSION ${READLINE}
-#libgfortran=${LIBGFORTRAN_VERSION}
 
 # Make sure conda-forge is the first channel
 conda config --add channels $conda_channel
@@ -86,25 +86,28 @@ conda config --add channels $conda_channel
 echo "=====================> Activate test environment..."
 
 source $CONDA_PREFIX/etc/profile.d/conda.sh
-#source /home/ndilalla/work/fermi/miniconda3/etc/profile.d/conda.sh
+#source /home/ndilalla/work/miniconda3/etc/profile.d/conda.sh
 conda activate $ENVNAME
 
 echo "======> getting the file..."
-if ! [ -f heasoft-6.25src.tar.gz ]; then
-#    curl -LO -z xspec-modelsonly-v6.22.1.tar.gz https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft6.22.1/xspec-modelsonly-v6.22.1.tar.gz
-     curl -LO -z heasoft-6.25src.tar.gz https://www.dropbox.com/s/zw6giglocr1z3o0/heasoft-6.25src.tar.gz
+if ! [ -f heasoft-6.30.1src.tar.gz ]; then
+     curl -LO -z heasoft-6.30.1src.tar.gz https://www.dropbox.com/s/sv6ge6libcxfvas/heasoft-6.30.1src.tar.gz
 fi
 
 # Build package
-echo "Build package..."
+echo "======> Build package..."
 
 #conda install conda-verify
 
+#conda install -c conda-forge boa -n base
+
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    #conda mambabuild --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
     conda build --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
     #conda index $HOME/miniconda/conda-bld
 else
     # there is some strange error about the prefix length
+    #conda mambabuild --no-build-id --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
     conda build --no-build-id --python=$TRAVIS_PYTHON_VERSION conda_recipe/xspec-modelsonly
     #conda index $HOME/miniconda/conda-bld
 fi
