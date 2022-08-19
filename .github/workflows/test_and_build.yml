@@ -34,9 +34,9 @@ jobs:
             - name: Maximize build space
               uses: easimon/maximize-build-space@master
               with:
-                root-reserve-mb: 1024
-                temp-reserve-mb: 1024
-                swap-size-mb: 4096
+                #root-reserve-mb: 1024
+                #temp-reserve-mb: 1024
+                #swap-size-mb: 4096
                 remove-dotnet: 'true'
                 remove-android: 'true'
                 remove-haskell: 'true'
@@ -62,7 +62,7 @@ jobs:
               with:
                   activate-environment: "test_env"
                   auto-activate-base: false
-                  mamba-version: "*"
+                  #mamba-version: "*"
                   architecture: "x64"
                   conda-build-version: "*"
                   python-version: ${{ matrix.python-version }}
@@ -141,7 +141,7 @@ jobs:
               with:
                   activate-environment: "test_env"
                   auto-activate-base: false
-                  mamba-version: "*"
+                  #mamba-version: "*"
                   architecture: "x64"
                   #conda-build-version: 3.20.2
                   python-version: ${{ matrix.python-version }}
