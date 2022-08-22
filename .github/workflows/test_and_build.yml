@@ -132,14 +132,12 @@ jobs:
             - name: Maximize build space
               run: |
                 echo " ----- Disk space before cleaning ----- "
-                df -h
                 df -h /home
                 sudo rm -rf /usr/share/dotnet
                 sudo rm -rf /opt/ghc
                 sudo rm -rf "/usr/local/share/boost"
                 sudo rm -rf "$AGENT_TOOLSDIRECTORY"
                 echo " ----- Disk space after cleaning ----- "
-                df -h
                 df -h /home
               if: runner.os == 'Linux'
             - uses: actions/checkout@v2
