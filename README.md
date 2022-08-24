@@ -1,5 +1,7 @@
 # xspec-modelsonly
 This package builds XSPEC models only in order to be compatible with fermitools.
+To install this package with conda run:
+conda install -c xspecmodels xspec-modelsonly 
 
 ![build status](https://github.com/threeML/xspec-modelsonly/actions/workflows/test_and_build.yml/badge.svg)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
